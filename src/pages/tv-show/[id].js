@@ -1,4 +1,4 @@
-import Navbar from "@/components/Navbar/Navbar";
+import Navbar from "../../components/Navbar/Navbar";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
@@ -18,7 +18,9 @@ const MovieDetail = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch(`https://api.themoviedb.org/3/tv/${id}?api_key=${API_KEY}`);
+        const response = await fetch(
+          `https://api.themoviedb.org/3/tv/${id}?api_key=${API_KEY}`
+        );
         if (!response.ok) {
           throw new Error("Failed to fetch");
         }
@@ -31,7 +33,9 @@ const MovieDetail = () => {
 
     const fetchCast = async () => {
       try {
-        const castResponse = await fetch(`https://api.themoviedb.org/3/tv/${id}/credits?api_key=${API_KEY}`);
+        const castResponse = await fetch(
+          `https://api.themoviedb.org/3/tv/${id}/credits?api_key=${API_KEY}`
+        );
         if (!castResponse.ok) {
           throw new Error("Failed to fetch cast");
         }
@@ -64,7 +68,9 @@ const MovieDetail = () => {
       </div>
     );
   }
-  const releaseYear = movie?.release_date ? new Date(movie.release_date).getFullYear() : "";
+  const releaseYear = movie?.release_date
+    ? new Date(movie.release_date).getFullYear()
+    : "";
 
   console.log(movie);
   console.log(cast);
@@ -72,13 +78,32 @@ const MovieDetail = () => {
   return (
     <>
       <Navbar />
-      <div className="detail h-screen bg-cover bg-center" style={{ backgroundImage: `url(${movie.backdrop_path ? `https://image.tmdb.org/t/p/w1280` + movie.backdrop_path : getRandomNullImage()})` }}>
+      <div
+        className="detail h-screen bg-cover bg-center"
+        style={{
+          backgroundImage: `url(${
+            movie.backdrop_path
+              ? `https://image.tmdb.org/t/p/w1280` + movie.backdrop_path
+              : getRandomNullImage()
+          })`,
+        }}
+      >
         <div className="relative h-full bg-black bg-opacity-70 flex flex-col md:flex-row gap-8 md:gap-16 px-24 py-10">
           <div className="detail-card overflow-hidden self-center rounded-2xl w-72">
-            <img src={movie.poster_path ? API_IMG + movie.poster_path : getRandomNullImage()} loading="..." alt={`poster for ${movie.name}`} />
+            <img
+              src={
+                movie.poster_path
+                  ? API_IMG + movie.poster_path
+                  : getRandomNullImage()
+              }
+              loading="..."
+              alt={`poster for ${movie.name}`}
+            />
           </div>
           <div className="mt-24 detail-content text-white md:flex-1">
-            <div className="name text-white text-4xl tracking-widest font-extrabold">{movie.name}</div>
+            <div className="name text-white text-4xl tracking-widest font-extrabold">
+              {movie.name}
+            </div>
             <div className="info flex items-center gap-2 md:gap-4 text-sm mt-4">
               <span className="tracking-widest">
                 {movie.spoken_languages.map((lang, index) => (
@@ -94,12 +119,19 @@ const MovieDetail = () => {
                 <span className="text-xl mr-1">
                   {" "}
                   <i>
-                    <svg className="w-4 h-4 ms-1 text-yellow-500 dark:text-yellow-300" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
+                    <svg
+                      className="w-4 h-4 ms-1 text-yellow-500 dark:text-yellow-300"
+                      aria-hidden="true"
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="currentColor"
+                      viewBox="0 0 22 20"
+                    >
                       <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
                     </svg>
                   </i>{" "}
                 </span>
-                {movie.vote_average.toFixed(2)} <span className="text-xm font-sans italic opacity-70">/10</span>
+                {movie.vote_average.toFixed(2)}{" "}
+                <span className="text-xm font-sans italic opacity-70">/10</span>
               </span>
               <Link href={`https://www.imdb.com/title/${movie.imdb_id}`}>
                 <p className="text-xm text-gray-50 hover:text-gray-300 px-4">
@@ -110,7 +142,10 @@ const MovieDetail = () => {
             <div className="flex items-center gap-6 flex-wrap mt-6">
               {movie.genres.map((genre, index) => {
                 return (
-                  <span key={genre.id.toString()} className="genre-items text-sm border border-white rounded-3xl py-1 px-2">
+                  <span
+                    key={genre.id.toString()}
+                    className="genre-items text-sm border border-white rounded-3xl py-1 px-2"
+                  >
                     {genre.name}
                   </span>
                 );
@@ -121,14 +156,25 @@ const MovieDetail = () => {
                 cast.cast.slice(0, 4).map((actor, index) => {
                   if (!actor.profile_path) return null;
                   return (
-                    <div key={actor.id.toString()} className="flex items-center gap-4">
-                      <img className="w-10 h-10 rounded-full object-cover" src={`https://image.tmdb.org/t/p/w300${actor.profile_path}`} alt={actor.name} />
-                      <span className="text-sm opacity-70 text-white">{actor.name}</span>
+                    <div
+                      key={actor.id.toString()}
+                      className="flex items-center gap-4"
+                    >
+                      <img
+                        className="w-10 h-10 rounded-full object-cover"
+                        src={`https://image.tmdb.org/t/p/w300${actor.profile_path}`}
+                        alt={actor.name}
+                      />
+                      <span className="text-sm opacity-70 text-white">
+                        {actor.name}
+                      </span>
                     </div>
                   );
                 })}
             </div>
-            <div className="mt-5 text-white text-xm lg:w-[90%]">{movie.overview}</div>
+            <div className="mt-5 text-white text-xm lg:w-[90%]">
+              {movie.overview}
+            </div>
           </div>
         </div>
       </div>

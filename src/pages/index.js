@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { Inter } from "next/font/google";
-import Navbar from "@/components/Navbar/Navbar";
-import Landing from "@/components/Landing";
-import Trending from "@/components/ListMovie/trending";
-import Popular from "@/components/ListMovie/popular";
-import Poptv from "@/components/ListMovie/popular-tv";
-import Footer from "@/components/Footer";
+import Navbar from "../components/Navbar/Navbar";
+import Landing from "../components/Landing";
+import Trending from "../components/ListMovie/trending";
+import Popular from "../components/ListMovie/popular";
+import Poptv from "../components/ListMovie/popular-tv";
+import Footer from "../components/Footer";
 
 const inter = Inter({ subsets: ["latin"] });
 

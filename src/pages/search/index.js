@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import Link from "next/link";
-import Navbar from "@/components/Navbar/Navbar";
+import Navbar from "../../components/Navbar/Navbar";
 
 const API_KEY = process.env.NEXT_PUBLIC_TMDB_API_KEY;
 const API_IMG = process.env.NEXT_PUBLIC_TMDB_API_IMG;
@@ -62,7 +62,9 @@ const Search = () => {
         if (!json?.results) {
           throw new Error(json?.statusMessage ?? "Error");
         }
-        setMovies((previous) => (currentPage === 1 ? json.results : [...previous, ...json.results]));
+        setMovies((previous) =>
+          currentPage === 1 ? json.results : [...previous, ...json.results]
+        );
         setCounts({
           total_pages: json.total_pages,
           total_results: json.total_results,
@@ -72,10 +74,19 @@ const Search = () => {
   }, [currentPage]);
 
   const handleScroll = () => {
-    const windowHeight = "innerHeight" in window ? window.innerHeight : document.documentElement.offsetHeight;
+    const windowHeight =
+      "innerHeight" in window
+        ? window.innerHeight
+        : document.documentElement.offsetHeight;
     const body = document.body;
     const html = document.documentElement;
-    const docHeight = Math.max(body.scrollHeight, body.offsetHeight, html.clientHeight, html.scrollHeight, html.offsetHeight);
+    const docHeight = Math.max(
+      body.scrollHeight,
+      body.offsetHeight,
+      html.clientHeight,
+      html.scrollHeight,
+      html.offsetHeight
+    );
     const windowBottom = windowHeight + window.pageYOffset;
     if (windowBottom >= docHeight - 1) {
       loadMoreItems();
@@ -129,8 +140,19 @@ const Search = () => {
           <div className="flex justify-start leading-normal font-medium font-montserrat">
             <form className="px-4 w-screen" onSubmit={handleSearch}>
               <div className="relative w-full ">
-                <svg xmlns="http://www.w3.org/2000/svg" className="absolute top-0 bottom-0 w-6 h-6 my-auto text-gray-400 left-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="absolute top-0 bottom-0 w-6 h-6 my-auto text-gray-400 left-3"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                  />
                 </svg>
                 <input
                   onChange={(e) => {
@@ -173,13 +195,19 @@ const Search = () => {
                   <Link href={`/movie/${movie.id}`}>
                     <div className="block overflow-hidden group">
                       <img
-                        src={movie.poster_path ? API_IMG + movie.poster_path : getRandomNullImage()}
+                        src={
+                          movie.poster_path
+                            ? API_IMG + movie.poster_path
+                            : getRandomNullImage()
+                        }
                         alt={`poster for ${movie.poster_path}`}
                         className="h-[350px] w-full object-cover transition duration-500 group-hover:scale-110 sm:h-[450px]"
                       />
                       <div className="absolute inset-0 flex flex-col items-start justify-end p-4">
                         <span className="mt-1.5 inline-block bg-black px-5 bg-opacity-70 py-3 text-xs rounded-md font-medium uppercase tracking-wide text-white">
-                          <h5 className="text-md font-bold text-amber-100">{movie.title}</h5>
+                          <h5 className="text-md font-bold text-amber-100">
+                            {movie.title}
+                          </h5>
                           Rating : {movie.vote_average}
                         </span>
                       </div>
@@ -191,8 +219,16 @@ const Search = () => {
           )}
         </div>
         {showScrollButton && (
-          <button className="fixed bottom-10 right-10 bg-red-600 text-white p-8 rounded-full shadow-md transition duration-300 ease-in-out hover:bg-red-700 focus:outline-none" onClick={scrollToTop}>
-            <svg xmlns="http://www.w3.org/2000/svg" height="32" width="32" viewBox="0 0 384 512">
+          <button
+            className="fixed bottom-10 right-10 bg-red-600 text-white p-8 rounded-full shadow-md transition duration-300 ease-in-out hover:bg-red-700 focus:outline-none"
+            onClick={scrollToTop}
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              height="32"
+              width="32"
+              viewBox="0 0 384 512"
+            >
               <path d="M214.6 41.4c-12.5-12.5-32.8-12.5-45.3 0l-160 160c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L160 141.2V448c0 17.7 14.3 32 32 32s32-14.3 32-32V141.2L329.4 246.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3l-160-160z" />
             </svg>
           </button>
